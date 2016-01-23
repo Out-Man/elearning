@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block title %}
+{% endblock %}
+
+
+{% block jumbotron %}
+<div class='container-fluid'>
+	<div class="jumbotron">
+		<div class='container'>
+			<div class='row'>
+				<div class='col-sm-6'>
+					<h1>{{ category.title }}</h1>
+				</div>
+				<div class='col-sm-6'>
+					<img src='{{ category.image.url }}' class='img-responsive'/>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class='col-sm-8 col-sm-offset-2'>
+{% if videos %}
+	<table class='table'>
+	<thead>
+		<th>#</th>
+		<th>Lecture</th>
+	</thead>
+	
+	{% for video in videos %}
+		<tr><td>{{ forloop.counter}}</td><td>{% if request.user.is_authenticated or video.has_preview %}<a href='{{ video.get_absolute_url }}'>{{ video }}</a>{% else %}{{ video }}{% endif %}</td></tr>
+	{% endfor %}
+	</table>
+{% else %}
+	<h3 style='text-align:center;'>Project is coming soon.</h3>
+{% endif %}
+</div>
+{% endblock %}

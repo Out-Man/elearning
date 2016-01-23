@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+
+<style>
+{% block style %}
+
+{% endblock %}
+</style>
+
+{% block title %}
+Welcome to E-Learning
+{% endblock %}
+
+
+{% block jumbotron %}
+<div class="jumbotron">
+	<div class='row'>
+		<div class='col-sm-6'>
+			<h1>Welcome</h1>
+			<p>This is our site.</p>
+		</div>
+		<div class='col-sm-6'>
+			<div role="tabpanel">
+				<!-- Nav tabs -->
+			 	<ul class="nav nav-tabs" role="tablist">
+				    <li role="presentation" class="active"><a href="#register" aria-controls="register" role="tab" data-toggle="tab">Register</a></li>
+				    <li role="presentation"><a href="#login" aria-controls="login" role="tab" data-toggle="tab">Login</a></li>
+			  	</ul>
+
+			  	<!-- Tab panes -->
+	  			<div class="tab-content">
+	  				<div role="tabpanel" class="tab-pane active" id="register">
+	    				<div class="panel panel-default">
+		  					<div class="panel-body">
+    							<form method='POST' action='{% url "register" %}'>{% csrf_token %}
+								{{ register_form.as_p }}
+								<input class='btn btn-default btn-block btn-lg' type='submit' value='Register'/>
+								</form>
+  							</div>
+						</div>
+		    		</div>
+
+		    	    <div role="tabpanel" class="tab-pane" id="login">
+						<div class="panel panel-default">
+							<div class="panel-body">
+								<form method='POST' action='{% url "auth_login" %}'>{% csrf_token %}
+								{{ login_form.as_p }}
+								<input class='btn btn-default btn-block' type='submit' value='Login'/>
+								</form>
+							</div>
+						</div>
+	   		 		</div>
+	  			</div>
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock %}
+
+
+{% block content %}
+{% if recent_videos %}
+
+
+{% for vid in recent_videos %}
+
+<a href="{{ vid.get_absolute_url }}">{{ vid.title }}</a><br/>
+<a href="{{ vid.get_absolute_url }}"><img src="{{ vid.category.image.url }}" class='img-responsive'/></a><br/>
+{% endfor %}
+{% endif %}
+{% endblock %}
